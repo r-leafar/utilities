@@ -1,5 +1,5 @@
 # utilities
-Scrips com utilidades diversas
+Scripts com utilidade diversas
 - [loteToCfe.py](#loteToCfe.py)
 
 # loteToCfe.py
