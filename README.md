@@ -1,8 +1,8 @@
 # utilities
 Scripts com utilidade diversas
-- [loteToCfe.py](#loteToCfe.py)
+- [loteToCfe](#loteToCfe)
 
-# loteToCfe.py
+# loteToCfe
 Quando executado faz uma varredura na pasta atual na busca de arquivos [(Xml) de lotes](https://portal.fazenda.sp.gov.br/servicos/sat/Paginas/Guia-Consult-Lote.aspx) de Cfe.
 Quando encontrado desmembra eles de maneira que os cupons fiquem salvos de forma separada 
 noutra pasta.
