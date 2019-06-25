@@ -90,7 +90,7 @@ print(args.accumulate(args.integers))'''
 
 parser = argparse.ArgumentParser()
 parser.add_argument("chave", help="chave de acesso da Nfe")
-parser.add_argument("-v", "--verbosity", action="store_true",help="Exibe mas informacoes sobre a chave")
+parser.add_argument("-v", "--verbosity", action="store_true",help="Exibe mais informacoes sobre a chave")
 parser.add_argument("-m", "--mes",type=int,default=-1,help="Muda o mes para o especificado")
 parser.add_argument("-ano", "--ano",type=int,default=-1,help="Muda o ano para o especificado")
 args = parser.parse_args()
