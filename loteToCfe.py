@@ -25,43 +25,66 @@ def XmlCfe(lote):
 	#Patterns
 	pattern = ['^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe versao="\d{1,}.\d{1,}" xmlns="http://www.fazenda.sp.gov.br/sat"\>','^<?xml version="1.0" encoding="UTF-8"?><envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}">','^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>']
 	
-	#'^\<\?xml version="1.0" encoding="UTF-8"\?\>\<cancCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>' xml lote cancelado.
+	patternCanc = ['^\<\?xml version="1.0" encoding="UTF-8"\?\>\<cancCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>']
 	
 	isXMLlote=None
+	normal=True
 	
+	for p in patternCanc:
+		if(re.match(p,lote[:150])):
+				isXMLlote = True
+				normal=False
+				break
+				
 	for p in pattern:
 		if(re.match(p,lote[:150])):
 			isXMLlote = True
 			break
 	
-	#Verifica se o XML é um arquivo em lotes CFe validos
-	if (isXMLlote):
-	# if (re.match('^<?xml version="1.0" encoding="UTF-8"?><envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}">',lote)):
-
-		#tag de abertura do cupom
-		b1 = '<CFe>'
-		#tag de fechamento do cupom
-		b2 = '</CFe>'
-		#inicio do cupom
-		inicio=0
-		#final do cupom
-		fim=0
-		#lista com as informacoes de todos os cupons
-		lista=[]	
-		#enquanto existe as tags acima faca o loop
-		while (inicio>=0) and (fim >=0):
-			#
-			inicio=lote.find(b1,inicio)
-			#
-			fim=lote.find(b2,inicio)+6
-			
-			if inicio >= 0 and fim >= 0:
-				lista.append({"ini":inicio,"fim":fim,"nome":XmlCfeNome(lote[inicio:fim])})
-				inicio=fim
-		return lista
+	#verifica se e XML lote Normal [TIPOS: NORMAL/CANCELADO]
+	if(normal):
+		#Verifica se o XML é um arquivo em lotes CFe validos
+		if (isXMLlote):
+			#processa XML
+			return ProcessaXML(lote,'<CFe>','</CFe>')	
+		else:
+			# Arquivo Xml de lote invalido
+			return None
 	else:
-		# Arquivo Xml de lote invalido
-		return None
+		if (isXMLlote):
+			#processa XML
+			return ProcessaXML(lote,'<CFeCanc>','</CFeCanc>','-canc')
+		else:
+			# Arquivo Xml de lote invalido
+			return None
+		
+def ProcessaXML(lote,start_tag,end_tag,sufix=""):
+	'''
+	:param str lote: xml de lote
+	:param str start_tag: Tag de abertura do cupom
+	:param str end_tag: Tag de fechamento do cupom
+	:param str sufix: Sufixo adicionado no nome do cupom
+	'''
+	#incremento
+	incremento = len(end_tag)
+	#inicio do cupom
+	inicio=0
+	#final do cupom
+	fim=0
+	#lista com as informacoes de todos os cupons
+	lista=[]	
+	#enquanto existe as tags acima faca o loop
+	while (inicio>=0) and (fim >=0):
+		#
+		inicio=lote.find(start_tag,inicio)
+		#
+		fim=lote.find(end_tag,inicio)+incremento
+		
+		if inicio >= 0 and fim >= 0:
+			lista.append({"ini":inicio,"fim":fim,"nome":XmlCfeNome(lote[inicio:fim])+sufix})
+			inicio=fim
+	return lista
+	
 
 def PegarArquivos():
 	#Captura o caminho atual do script
@@ -111,9 +134,3 @@ def LerArquivo(fname):
 			
 init()
 PegarArquivos()
-
-
-
-
-	
-
