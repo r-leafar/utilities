@@ -21,8 +21,22 @@ def XmlCfeNome(xml):
 	
 
 def XmlCfe(lote):
+
+	#Patterns
+	pattern = ['^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe versao="\d{1,}.\d{1,}" xmlns="http://www.fazenda.sp.gov.br/sat"\>','^<?xml version="1.0" encoding="UTF-8"?><envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}">','^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>']
+	
+	#'^\<\?xml version="1.0" encoding="UTF-8"\?\>\<cancCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>' xml lote cancelado.
+	
+	isXMLlote=None
+	
+	for p in pattern:
+		if(re.match(p,lote[:150])):
+			isXMLlote = True
+			break
+	
 	#Verifica se o XML é um arquivo em lotes CFe validos
-	if (re.match('^<envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}">',lote)):
+	if (isXMLlote):
+	# if (re.match('^<?xml version="1.0" encoding="UTF-8"?><envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}">',lote)):
 
 		#tag de abertura do cupom
 		b1 = '<CFe>'
@@ -94,13 +108,12 @@ def LerArquivo(fname):
 	else:
 		#Informa que o arquivo de Lote Cfe nao e valido
 		print ("%s arquivo de lote invalido"%fname)
-		
-		
-	
-	
-	
+			
 init()
 PegarArquivos()
+
+
+
 
 	
 
