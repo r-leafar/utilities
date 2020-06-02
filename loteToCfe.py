@@ -23,7 +23,7 @@ def XmlCfeNome(xml):
 def XmlCfe(lote):
 
 	#Patterns
-	pattern = ['^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe versao="\d{1,}.\d{1,}" xmlns="http://www.fazenda.sp.gov.br/sat"\>','^<?xml version="1.0" encoding="UTF-8"?><envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}">','^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>']
+	pattern = ['^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe versao="\d{1,}.\d{1,}" xmlns="http://www.fazenda.sp.gov.br/sat"\>','^<?xml version="1.0" encoding="UTF-8"?><envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}">','^\<\?xml version="1.0" encoding="UTF-8"\?\>\<envCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>','\<envCFe versao="\d{1,}.\d{1,}" xmlns="http://www.fazenda.sp.gov.br/sat"\>']
 	
 	patternCanc = ['^\<\?xml version="1.0" encoding="UTF-8"\?\>\<cancCFe xmlns="http://www.fazenda.sp.gov.br/sat" versao="\d{1,}.\d{1,}"\>','^\<\?xml version="1.0" encoding="UTF-8"\?\>\<cancCFe versao="\d{1,}.\d{1,}" xmlns="http://www.fazenda.sp.gov.br/sat"\>']
 	
